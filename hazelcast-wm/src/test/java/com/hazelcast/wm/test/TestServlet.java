@@ -35,6 +35,15 @@ public class TestServlet extends HttpServlet {
 			return;
 		}
 
+		if (req.getRequestURI().endsWith("readIfExist"))
+		{
+			//In a real life application we could check user authentication info here.
+			HttpSession session = req.getSession(false); //Don't create a session if one does not exist!!!
+			Object value = session.getAttribute("key");
+			resp.getWriter().write(value == null ? "null" : value.toString());
+			return;
+		}
+
         HttpSession session = req.getSession();
         if (req.getRequestURI().endsWith("write")) {
             session.setAttribute("key", "value");
